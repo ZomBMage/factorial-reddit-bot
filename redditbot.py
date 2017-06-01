@@ -33,7 +33,7 @@ while True:
                                 donelist.append(str(item)+"! = "+str(done))
                             except:
                                 print("",end="")
-                #postbody time!
+                                
                 string = submission.selftext
                 string = ("").join(re.split(" ", string))
                 string = ("").join(re.split(",", string))
@@ -57,7 +57,9 @@ while True:
                                 donelist.append(str(item)+"! = "+str(done))
                             except:
                                 print("",end="")
-                        submission.reply("""
+
+                                
+                    submission.reply("""
     
         """.join(donelist)+"""
 
@@ -68,12 +70,10 @@ while True:
 
 
 \^I \^am \^a \^testing \^bot""")
-                        replied_to.append(submission.id)
-                        with open("posts_replied_to.txt", "w") as file:
-                            for post_id in replied_to:
-                                file.write(post_id + "\n")
-                else:
-                    print("",end="")
+                    replied_to.append(submission.id)
+                    with open("posts_replied_to.txt", "w") as file:
+                        for post_id in replied_to:
+                            file.write(post_id + "\n")
                 
             for comments in subreddit.comments(limit=10):
                 donelist = []
@@ -83,9 +83,8 @@ while True:
                     replied_comment = list(filter(None, replied_comment))
                     if comments.author.name != "ZomBMageBOT":
                         if comments.id not in replied_comment:
-                            string = re.split(",", comments.body)
+                            string = ("").join(re.split(",", comments.body))
                             string = ("").join(re.split(" ", string))
-                            string = ("").join(re.split(",", string))
                             if submission.id not in replied_to:
                                 negative = re.findall("-\d+!", string)
                                 decimal = re.findall("\d+\.\d+!", string)
@@ -106,9 +105,11 @@ while True:
                                             donelist.append(str(item)+"! = "+str(done))
                                         except:
                                             print("",end="")
-                                comments.reply("""
+                                comments.reply("""`
 
-        """.join(donelist)+"""
+"""+"""
+
+        """.join(donelist)+"""`
 
 \^bleep \^bloop \^i \^am \^a \^bot.
 
