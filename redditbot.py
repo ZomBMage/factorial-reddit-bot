@@ -2,9 +2,15 @@
 import praw
 import re
 import math
+import os
 
 reddit = praw.Reddit('bot')
 subreddit = reddit.subreddit("ZomBMage")
+
+def touch(file): #Emulates the touch command in Linux distros
+    if not os.path.exists(file):
+        open(file, 'w').close()
+    return file
 
 
 def submissions(text, array):
@@ -37,7 +43,6 @@ def string_split(text_input):
 
 def reply(content, replied_list):
     content.reply("""
-
             """.join(replied_list) + """
     \^bleep \^bloop \^i \^am \^a \^bot.
     \^contact \^u/ZomBMage \^about \^questions
@@ -48,7 +53,9 @@ if __name__ == "__main__":
     while True:
         for submission in subreddit.hot(limit=5):
             done_list = []
-            with open("posts_replied_to.txt", "r") as file:
+
+            f = touch("posts_replied_to.txt")
+            with open(f, "r") as file:
                 replied_to = file.read()
                 replied_to = replied_to.split("\n")
                 replied_to = list(filter(None, replied_to))
@@ -69,7 +76,8 @@ if __name__ == "__main__":
 
             for comments in subreddit.comments(limit=10):
                 done_list = []
-                with open("comments_replied_to.txt", "r") as filec:
+                f = touch("comments_replied_to.txt")
+                with open(f, "r") as filec:
                     replied_comment = filec.read()
                     replied_comment = replied_comment.split("\n")
                     replied_comment = list(filter(None, replied_comment))
@@ -82,4 +90,4 @@ if __name__ == "__main__":
                                 replied_comment.append(comments.id)
                 with open("comments_replied_to.txt", "w") as filec:
                     for comment_id in replied_comment:
-                        filec.write('{0}\n'.format(comment_id))
+filec.write('{0}\n'.format(comment_id))
